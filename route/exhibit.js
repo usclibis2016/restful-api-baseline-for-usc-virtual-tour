@@ -1,11 +1,33 @@
 const express = require('express');
 const app = express();
-
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
 const router = express.Router();
 const Exhibits = require('../models/Exhibits');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+
+
+
+const storage = multer.diskStorage({
+    destination:(req,file,callback)=>{
+        callback(null,"./my-app/public/uploads/")
+    },
+    filename:(req,file,callback)=>{
+        callback(null,file.originalname);
+    }
+})
+
+
+
+
+
+
+
+
+
 
 //veiw all
 router.get('/', (req, res) => {
@@ -36,14 +58,14 @@ router.post('/', (req, res) => {
         .catch(err => res.status(400).json('Error:' + err));
 });
 
-// delete
+// delete exhibit
 router.route('/:id').delete((req, res) => {
     Exhibits.findByIdAndDelete(req.params.id)
         .then(post => res.json('Record was deleted.'))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-
+// update exhibit
 router.route('/update/:id').post((req, res) => {
    
     Exhibits.findById(req.params.id) 

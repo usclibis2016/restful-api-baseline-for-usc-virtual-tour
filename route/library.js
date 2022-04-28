@@ -20,7 +20,11 @@ router.post('/', (req, res) => {
         .catch(err => res.status(400).json('Error:' + err));
 });
 
+//Add new Panoramic view on specific Library
+
+
 // Delete Library
+
 router.route('/:id').delete((req, res) => {
     Library.findByIdAndDelete(req.params.id)
         .then(post => res.json('Library  deleted Successfully.'))
@@ -41,6 +45,20 @@ router.route('/:id').get((req, res) => {
         
          .then(exhibit =>res.json(exhibit))
         .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// update exhibit
+router.route('/update/:id').post((req, res) => {
+   
+    Library.findById(req.params.id) 
+    .then( library=> {
+                    library.library_name = req.body.library_name;
+                    library.library_description = req.body.library_description;
+                    library.save()
+                        .then(post => res.json("Library  was updated."))
+                        .catch(err => res.status(400).json('Error: ' + err));
+                })
+                .catch(err => res.status(400).json('Error: ' + err));
 });
 
 module.exports = router;

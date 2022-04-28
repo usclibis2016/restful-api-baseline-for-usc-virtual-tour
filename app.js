@@ -1,9 +1,15 @@
 const express = require('express');
+const cors = require('cors')
 const app = express();
+
+
+
 app.use(express.json());
+app.use(cors());
 const mongoose = require('mongoose')
 require('dotenv/config');
 
+app.use('/static', express.static('public'))
 
 //Import  Announcement Router
 const AnnouncementRoute = require('./route/announcement');

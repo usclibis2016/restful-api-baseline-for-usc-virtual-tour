@@ -3,17 +3,14 @@ const mongoose = require('mongoose');
 
 const Exhbit_Image_Shema = mongoose.Schema({
   image_name:{
-    required:true,
+    required:false,
     type:String  
   },
-  image_url:{
-    required:true,
-    type:String  
-  },
+
   exhibit:{
-    required:true,
+    required:false,
     type:mongoose.ObjectId,
     ref:"Exhibit"
   },
 })
-module.exports = mongoose.model('Exhibit_image',Exhbit_Image_Shema);    
+module.exports = mongoose.model('Exhibit_image',Exhbit_Image_Shema);

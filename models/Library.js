@@ -19,10 +19,10 @@ const LibraryShema = mongoose.Schema({
     required:true,
     type:String
   },
-  panoramic_view:{
+  panoramic_view:[{
     required:true,
     type:String
-  },
+  }],
   librarian:{
     required:true,
     type:mongoose.ObjectId,
