@@ -14,7 +14,7 @@ const ExhibitShema = mongoose.Schema({
   library:{
     required:true,
     type:mongoose.ObjectId,
-    ref:"Exhibit_image"
+    ref:"Library"
   },
 })
 

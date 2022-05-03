@@ -24,10 +24,9 @@ const upload = multer({storage:storageFile});
 //Add new Exhibit_image
 router.post('/', upload.single("image_name"), (req, res) => {
     console.log(req.file);
-
     const   image_name= req.file.originalname;
-    const    exhibit=req.body.exhibit;
-    const newExhibit_image = new Exhibit_image({image_name,exhibit});
+    const   exhibit=req.body.exhibit;
+    const   newExhibit_image = new Exhibit_image({image_name,exhibit});
     newExhibit_image.save()
         .then(post => res.json("Exhibit_image added successfully!"))
         .catch(err => res.status(400).json('Error:' + err));

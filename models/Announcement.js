@@ -8,7 +8,7 @@ const AnnouncementShema = mongoose.Schema({
     type:String
      
   },
-  librarian_id:{
+  librarian:{
       required:true,
       type:mongoose.ObjectId,
       ref:"Librarian"

@@ -1,18 +1,36 @@
 const express = require('express');
 const app = express();
-
+const multer  = require('multer')
 const router = express.Router();
 const Announcement= require('../models/Announcement');
 
+
+
+
+const storageFile = multer.diskStorage({
+    destination:(req,file,callback)=>{
+        callback(null,"./public/announcement_images")
+    },
+    filename:(req,file,callback)=>{
+        callback(null,file.originalname);
+    }
+})
+ 
+const upload = multer({storage:storageFile});
+
+
+
+
+
 //Add new Announcement
-router.post('/', (req, res) => {
+router.post('/',upload.single("image"), (req, res) => {
    
     const   announcement_text= req.body.announcement_text;
-    const   librarian_id=req.body.librarian_id;
-    const   image=req.body.image;
+    const   librarian=req.body.librarian;
+    const   image=req.file.originalname;
     
     
-    const newAnnouncement = new Announcement({announcement_text,librarian_id,image});
+    const newAnnouncement = new Announcement({announcement_text,librarian,image});
     newAnnouncement.save()
         .then(post => res.json("Announcement added successfully!"))
         .catch(err => res.status(400).json('Error:' + err));

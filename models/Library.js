@@ -20,7 +20,7 @@ const LibraryShema = mongoose.Schema({
     type:String
   },
   panoramic_view:[{
-    required:true,
+    required:false,
     type:String
   }],
   librarian:{

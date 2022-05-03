@@ -1,16 +1,34 @@
 const express = require('express');
 const app = express();
-
+const multer  = require('multer')
 const router = express.Router();
 const Library= require('../models/Library');
+
+
+
+
+
+
+const storageFile = multer.diskStorage({
+    destination:(req,file,callback)=>{
+        callback(null,"./public/panoramic_view")
+    },
+    filename:(req,file,callback)=>{
+        callback(null,file.originalname);
+    }
+})
+ 
+const upload = multer({storage:storageFile});
+
+
 //Add new Library
-router.post('/', (req, res) => {
+router.post('/',upload.single("panoramic_view"), (req, res) => {
    
     const   library_name= req.body.library_name;
     const   library_location=req.body.library_location;
     const   theme=req.body.theme;
     const   library_description= req.body.library_description;
-    const   panoramic_view=req.body.panoramic_view;
+    const   panoramic_view=req.file.originalname;
     const   librarian=req.body.librarian;
    
     
