@@ -32,6 +32,9 @@ const Exhibit_image_Route = require('./route/Exhibit_image');
 app.use('/exhibit_image',Exhibit_image_Route);
 
 
+// Import  Library Router
+const Panoramic_image = require('./route/panoramic');
+app.use('/panoramic',Panoramic_image)
 
 
 //Connect  to DB

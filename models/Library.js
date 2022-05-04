@@ -21,7 +21,8 @@ const LibraryShema = mongoose.Schema({
   },
   panoramic_view:[{
     required:true,
-    type:String
+    type:mongoose.ObjectId,
+    ref:"PanoramicView"
   }],
   librarian:{
     required:true,

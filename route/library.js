@@ -33,7 +33,7 @@ router.route('/:id').delete((req, res) => {
 
 //veiw all
 router.get('/', (req, res) => {
-    Library.find({}).populate("librarian")
+    Library.find()
         .then(user => res.json(user))
         .catch(err => res.status(400).json('Error: ' + err));
 
