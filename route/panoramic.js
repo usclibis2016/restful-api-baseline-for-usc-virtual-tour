@@ -1,10 +1,9 @@
 const express = require('express');
 const app = express();
 const multer  = require('multer')
-
+const fs = require("fs")
 const router = express.Router();
 const Panoramic= require('../models/Panoramic');
-
 
 
 
@@ -21,29 +20,38 @@ const storageFile = multer.diskStorage({
  
 const upload = multer({storage:storageFile});
 
-//Add new Exhibit_image
+//Add new Panoramic images
 router.post('/', upload.single("image_name"), (req, res) => {
     console.log(req.file);
 
     const   image_name= req.file.originalname;
-    const   Library=req.body.library;
+    const   Library=req.body.Library;
     const NewPanoramic = new Panoramic({image_name,Library});
     NewPanoramic.save()
-        .then(post => res.json("Exhibit_image added successfully!"))
+        .then(post => res.json("panoramic added successfully!"))
         .catch(err => res.status(400).json('Error:' + err));
 });
 
-// Delete Exhibit_image
+// Delete panoramic images
 router.route('/:id').delete((req, res) => {
+
     Panoramic.findByIdAndDelete(req.params.id)
-        .then(post => res.json('Panoramic  deleted Successfully.'))
-        .catch(err => res.status(400).json('Error: ' + err));
-});
+            .then(panoImage=> {
+                fs.unlink("./public/images/"+panoImage.image_name, function(err) {
+                    if (err) {
+                        throw err
+                    } else {
+                       res.json("Deleted successfully")
+                    
+                    }
+                    })})
+            .catch(err => res.status(400).json('Error: ' + err));
+})
 
 //veiw all
 router.get('/', (req, res) => {
-    Panoramic.find({}).populate('Library')
-        .then(user => res.json(user))
+    Panoramic.find()
+        .then(result => res.json(result))
         .catch(err => res.status(400).json('Error: ' + err));
 
 });
@@ -51,10 +59,28 @@ router.get('/', (req, res) => {
 
 //veiw specific images by exhibit id
 router.route('/:id').get((req, res) => {
-   Panoramic.find({"exhibit":req.params.id})
-        
-         .then(panoramic =>res.json())
+   Panoramic.findById(req.params.id)
+         .then(panoramic =>res.json(panoramic))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-module.exports = router;
+// update panoramic images
+router.post('/update/:id',upload.single("image_name"),(req, res) => {
+   
+    Panoramic.findById(req.params.id) 
+    .then(panoImage=> {
+        fs.unlink("./public/images/"+panoImage.image_name, function(err) {
+            if (err) {
+                throw err
+            } else {
+               panoImage.image_name=req.file.originalname;
+               panoImage.save()
+                    .then(post => res.json("Panoramic  was updated."))
+                    .catch(err => res.status(400).json('Error: ' + err));
+            
+            }
+            })})
+                .catch(err => res.status(400).json('Error: ' + err));
+});
+
+module.exports = router;    
