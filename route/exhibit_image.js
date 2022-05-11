@@ -48,8 +48,6 @@ router.get('/', (req, res) => {
 });
 
 
-
-
 //veiw specific images by exhibit id
 router.route('/:id').get((req, res) => {
    Exhibit_image.find({"exhibit":req.params.id})

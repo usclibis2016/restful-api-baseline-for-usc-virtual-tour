@@ -4,11 +4,15 @@ const mongoose = require('mongoose');
 const ExhibitShema = mongoose.Schema({
 
    exhibit_title:{
-    required:true,
+   
     type:String
    },
+   available:{
+  
+    type:Boolean
+   },
    exhibit_description:{
-    required:true,
+  
     type:String 
   },
   library:{
