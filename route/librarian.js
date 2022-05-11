@@ -39,8 +39,24 @@ router.get('/', (req, res) => {
 router.route('/:id').get((req, res) => {
    Librarian.findById(req.params.id)
         
-         .then(exhibit =>res.json(exhibit))
+         .then(librarian =>res.json(librarian))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// update librarian
+router.route('/update/:id').post((req, res) => {
+ 
+    Librarian.findById(req.params.id)
+        .then(librarian => {
+              librarian.first_name = req.body.first_name;
+              librarian.middle_initial = req.body.middle_initial;
+              librarian.last_name = req.body.last_name;
+              librarian.username = req.body.username;
+              librarian.password = req.body.password;
+            librarian.save()
+                .then(user => res.json("Record was updated."))
+                .catch(err => res.status(400).json('Error: ' + err));
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+});
 module.exports = router;

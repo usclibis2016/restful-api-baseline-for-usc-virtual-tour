@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const PanoramicShema = mongoose.Schema({
 
     image_name:{
-        required:false,
+        required:true,
         type:String  
       },
       available:{
@@ -12,7 +12,7 @@ const PanoramicShema = mongoose.Schema({
         type:Boolean
        },
     Library:{
-        required:false,
+        required:true,
         type:mongoose.ObjectId,
         ref:"Library"
       },
