@@ -70,7 +70,11 @@ router.post('/update/:id',upload.single("image_name"),(req, res) => {
    
     Panoramic.findById(req.params.id) 
     .then(panoImage=> { 
-     
+     if(req.file.panoImage==undefined){ 
+        panoImage.available=req.body.available;
+        panoImage.save()
+             .then(post => res.json("Panoramic  was updated."))
+             .catch(err => res.status(400).json('Error: ' + err));}else{}
         fs.unlink("./public/images/"+panoImage.image_name, function(err) {
             if (err) {
                 throw err

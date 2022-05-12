@@ -36,7 +36,9 @@ app.use('/exhibit_image',Exhibit_image_Route);
 const Panoramic_image = require('./route/panoramic');
 app.use('/panoramic',Panoramic_image)
 
-
+// Import  Library_image Router
+const Library_image_Route = require('./route/Library_image');
+app.use('/library_image',Library_image_Route);
 //Connect  to DB
 
 mongoose.connect(process.env.ATLAS_URI, {

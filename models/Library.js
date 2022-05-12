@@ -25,7 +25,7 @@ const LibraryShema = mongoose.Schema({
     ref:"PanoramicView"
   }],
   librarian:{
-    required:true,
+    required:false,
     type:mongoose.ObjectId,
     ref:"Librarian"
   },

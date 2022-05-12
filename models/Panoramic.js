@@ -4,15 +4,15 @@ const mongoose = require('mongoose');
 const PanoramicShema = mongoose.Schema({
 
     image_name:{
-        required:true,
+        required:false,
         type:String  
       },
       available:{
-        required:true,
+        required:false,
         type:Boolean
        },
     Library:{
-        required:true,
+        required:false,
         type:mongoose.ObjectId,
         ref:"Library"
       },
