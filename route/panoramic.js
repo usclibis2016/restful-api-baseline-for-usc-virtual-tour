@@ -69,7 +69,8 @@ router.route('/:id').get((req, res) => {
 router.post('/update/:id',upload.single("image_name"),(req, res) => {
    
     Panoramic.findById(req.params.id) 
-    .then(panoImage=> {
+    .then(panoImage=> { 
+     
         fs.unlink("./public/images/"+panoImage.image_name, function(err) {
             if (err) {
                 throw err
@@ -79,10 +80,11 @@ router.post('/update/:id',upload.single("image_name"),(req, res) => {
                panoImage.save()
                     .then(post => res.json("Panoramic  was updated."))
                     .catch(err => res.status(400).json('Error: ' + err));
-            
             } 
-            })})
-                .catch(err => res.status(400).json('Error: ' + err));
+        })
+        })
+    .catch(err => res.status(400).json('Error: ' + err));
+        
 });
 
 module.exports = router;    

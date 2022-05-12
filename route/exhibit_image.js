@@ -32,12 +32,16 @@ router.post('/', upload.single("image_name"), (req, res) => {
         .catch(err => res.status(400).json('Error:' + err));
 });
 
+
+
 // Delete Exhibit_image
 router.route('/:id').delete((req, res) => {
     Exhibit_image.findByIdAndDelete(req.params.id)
         .then(post => res.json('Exhibit_image  deleted Successfully.'))
         .catch(err => res.status(400).json('Error: ' + err));
 });
+
+
 
 //veiw all
 router.get('/', (req, res) => {
@@ -46,6 +50,7 @@ router.get('/', (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 
 });
+
 
 
 //veiw specific images by exhibit id
