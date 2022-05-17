@@ -43,6 +43,9 @@ router.route('/:id').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+
+
+
 // update librarian
 router.route('/update/:id').post((req, res) => {
  
@@ -59,4 +62,18 @@ router.route('/update/:id').post((req, res) => {
         })
         .catch(err => res.status(400).json('Error: ' + err));
 });
+//login route
+router.route('/:username').get((req, res) => {
+    Librarian.findById({"username":req.params.username})
+        
+          .then(librarian =>{
+            if(librarian.username==req.params.username){
+                res.json("user loggedin")
+            }else{
+                res.json("invalid username or password Entered")
+            }
+            
+          })
+          .catch(err => res.status(400).json('Error: ' + err));
+ });
 module.exports = router;

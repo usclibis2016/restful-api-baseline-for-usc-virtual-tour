@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const multer  = require('multer')
-
+const fs = require("fs")
 const router = express.Router();
 const Exhibit_image= require('../models/Exhibit_image');
 
@@ -37,8 +37,15 @@ router.post('/', upload.single("image_name"), (req, res) => {
 // Delete Exhibit_image
 router.route('/:id').delete((req, res) => {
     Exhibit_image.findByIdAndDelete(req.params.id)
-        .then(post => res.json('Exhibit_image  deleted Successfully.'))
-        .catch(err => res.status(400).json('Error: ' + err));
+    .then(image=> {
+        fs.unlink("./public/images/"+image.image_name, function(err) {
+            if (err) {
+                throw err
+            } else {
+               res.json("Deleted successfully")
+            }
+            })})
+    .catch(err => res.status(400).json('Error: ' + err));
 });
 
 
