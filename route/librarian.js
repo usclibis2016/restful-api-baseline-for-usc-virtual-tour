@@ -1,11 +1,11 @@
 const express = require('express');
 const app = express();
-
 const router = express.Router();
 const Librarian= require('../models/Librarian');
-
+const JWT= require('jsonwebtoken')
+const checkAuth= require("../middleware/checkAuth")  
 //Add new Librarian
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
    
     const   first_name= req.body.first_name;
     const   middle_initial=req.body.middle_initial;
@@ -16,8 +16,10 @@ router.post('/', (req, res) => {
     
     const newLibrarian = new Librarian({first_name,middle_initial,last_name,username,password});
     newLibrarian.save()
-        .then(post => res.json("Librarian added successfully!"))
-        .catch(err => res.status(400).json('Error:' + err));
+    const token=await JWT.sign({newLibrarian},"my_secret_key")
+    res.json({token})
+        // .then(admin => )
+        // .catch(err => res.status(400).json('Error:' + err));
 });
 
 // Delete Librarian
@@ -28,7 +30,7 @@ router.route('/:id').delete((req, res) => {
 });
 
 //veiw all
-router.get('/', (req, res) => {
+router.get('/',checkAuth, (req, res) => {
     Librarian.find()
         .then(user => res.json(user))
         .catch(err => res.status(400).json('Error: ' + err));
@@ -63,17 +65,30 @@ router.route('/update/:id').post((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 //login route
-router.route('/:username').get((req, res) => {
-    Librarian.findById({"username":req.params.username})
-        
-          .then(librarian =>{
-            if(librarian.username==req.params.username){
-                res.json("user loggedin")
-            }else{
-                res.json("invalid username or password Entered")
-            }
+router.route('/login').post( async (req, res) => {
+    
+  Librarian.find({"username":req.body.username})
+   .then (librarian=>{ 
+     if(librarian.length==0){
+        return res.json({
+            msg:"invalid credential"
             
-          })
-          .catch(err => res.status(400).json('Error: ' + err));
+        })
+     }else{
+        if(librarian[0].password!=req.body.password){
+            return res.json({
+                msg:"invalid credential"
+                
+            })
+          
+         }
+            
+     }
+     const token= JWT.sign({librarian},"my_secret_key")
+     res.json({
+         token:token,
+         adminID:librarian[0]._id
+         })
+    })
  });
 module.exports = router;
