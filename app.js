@@ -9,7 +9,7 @@ app.use(cors());
 const mongoose = require('mongoose')
 require('dotenv/config');
 
-app.use('/static', express.static('public'))
+app.use('/static', express.static('public'));
 
 //Import  Announcement Router
 const AnnouncementRoute = require('./route/announcement');
@@ -34,7 +34,11 @@ app.use('/exhibit_image',Exhibit_image_Route);
 
 // Import  Panoramic Router
 const Panoramic_image = require('./route/panoramic');
-app.use('/panoramic',Panoramic_image)
+app.use('/panoramic',Panoramic_image);
+
+// import virtual images Router
+const Virtual_image = require('./route/virtualMap');
+app.use('/virtualMap',Virtual_image);
 
 // Import  Library_image Router
 const Library_image_Route = require('./route/Library_image');

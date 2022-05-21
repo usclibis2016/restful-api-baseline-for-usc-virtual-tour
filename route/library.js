@@ -3,12 +3,6 @@ const app = express();
 const multer  = require('multer')
 const router = express.Router();
 const Library= require('../models/Library');
-
-
-
-
-
-
 const storageFile = multer.diskStorage({
     destination:(req,file,callback)=>{
         callback(null,"./public/panoramic_view")

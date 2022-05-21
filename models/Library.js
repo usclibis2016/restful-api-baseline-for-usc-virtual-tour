@@ -24,6 +24,11 @@ const LibraryShema = mongoose.Schema({
     type:mongoose.ObjectId,
     ref:"PanoramicView"
   }],
+  virtual_map:[{
+    required:true,
+    type:mongoose.ObjectId,
+    ref:"VirtualMap"
+  }],
   librarian:{
     required:false,
     type:mongoose.ObjectId,
