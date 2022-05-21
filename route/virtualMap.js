@@ -1,10 +1,10 @@
 const express = require('express');
 const app = express();
-const multer  = require('multer')
-const fs = require("fs")
+const multer  = require('multer');
+const fs = require("fs");
 const router = express.Router();
 const imagefile=require('../image_controller');
-const virtualMap = require('../models/virtualMap');
+const virtualMap = require('../models/VirtualMap');
 
 const storageFile = multer.diskStorage({
     destination:(req,file,callback)=>{
