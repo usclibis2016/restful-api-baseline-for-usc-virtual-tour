@@ -71,13 +71,15 @@ router.route('/login').post( async (req, res) => {
    .then (librarian=>{ 
      if(librarian.length==0){
         return res.json({
-            msg:"invalid credential"
+            msg:"invalid credential",
+            status:"401"    
             
         })
      }else{
         if(librarian[0].password!=req.body.password){
             return res.json({
-                msg:"invalid credential"
+                msg:"invalid credential",
+                status:"401"    
                 
             })
           
@@ -87,7 +89,8 @@ router.route('/login').post( async (req, res) => {
      const token= JWT.sign({librarian},"my_secret_key")
      res.json({
          token:token,
-         adminID:librarian[0]._id
+         adminID:librarian[0]._id,
+         status:"200"
          })
     })
  });
