@@ -36,6 +36,10 @@ app.use('/exhibit_image',Exhibit_image_Route);
 const Panoramic_image = require('./route/panoramic');
 app.use('/panoramic',Panoramic_image)
 
+// import virtual images Router
+const Virtual_image = require('./route/virtualMap');
+app.use('/virtualMap',Virtual_image)
+
 // Import  Library_image Router
 const Library_image_Route = require('./route/Library_image');
 app.use('/library_image',Library_image_Route);
