@@ -4,9 +4,6 @@ const multer  = require('multer')
 const fs = require("fs")
 const router = express.Router();
 const Panoramic= require('../models/Panoramic');
-
-
-
 const imagefile=require('../image_controller')
 
 const storageFile = multer.diskStorage({
@@ -70,18 +67,28 @@ router.post('/update/:id',upload.single("image_name"),(req, res) => {
    
     Panoramic.findById(req.params.id) 
     .then(panoImage=> { 
-     
-        fs.unlink("./public/360/"+panoImage.image_name, function(err) {
-            if (err) {
-                throw err
-            } else {
-               panoImage.image_name=req.file.originalname;
-               panoImage.available=req.body.available;
-               panoImage.save()
-                    .then(post => res.json("Panoramic  was updated."))
-                    .catch(err => res.status(400).json('Error: ' + err));
-            } 
-        })
+        if(req.body.available=="false"){
+            panoImage.available=req.body.available;
+            panoImage.Library=req.body.Library
+            panoImage.save()
+                 .then(post => res.json("Panoramic  was updated."))
+                 .catch(err => res.status(400).json('Error: ' + err));
+        }else{
+          
+            fs.unlink("./public/360/"+panoImage.image_name, function(err) {
+                if (err) {
+                    throw err
+                } else {
+                   panoImage.image_name=req.file.originalname;
+                   panoImage.available=req.body.available;
+                   panoImage.Library=req.body.Library
+                   panoImage.save()
+                        .then(post => res.json("Panoramic  was updated."))
+                        .catch(err => res.status(400).json('Error: ' + err));
+                } 
+            })
+        }
+        
         })
     .catch(err => res.status(400).json('Error: ' + err));
         
