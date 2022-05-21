@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
-
-
-const virtualMapShema = mongoose.Schema({
+const virtualMapSchema = mongoose.Schema({
 
     image_name:{
         required:false,
@@ -20,4 +18,4 @@ const virtualMapShema = mongoose.Schema({
 
 })
 
-module.exports = mongoose.model('virtualMap',virtualMapShema);
+module.exports = mongoose.model('VirtualMap', virtualMapSchema);
