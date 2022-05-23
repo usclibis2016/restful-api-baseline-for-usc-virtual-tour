@@ -13,10 +13,7 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-<<<<<<< HEAD
-=======
     "jsonwebtoken": "^8.5.1",
->>>>>>> a8b241123a80e3ae36b7708a22fa9f44e34d73d4
     "mongoose": "^6.0.9",
     "multer": "^1.4.4",
     "nodemon": "^2.0.13",

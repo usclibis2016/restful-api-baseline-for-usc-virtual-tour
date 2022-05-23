@@ -1,11 +1,7 @@
 const express = require('express');
 const app = express();
 const multer  = require('multer')
-<<<<<<< HEAD
-
-=======
 const fs = require("fs")
->>>>>>> a8b241123a80e3ae36b7708a22fa9f44e34d73d4
 const router = express.Router();
 const Exhibit_image= require('../models/Exhibit_image');
 
@@ -41,10 +37,6 @@ router.post('/', upload.single("image_name"), (req, res) => {
 // Delete Exhibit_image
 router.route('/:id').delete((req, res) => {
     Exhibit_image.findByIdAndDelete(req.params.id)
-<<<<<<< HEAD
-        .then(post => res.json('Exhibit_image  deleted Successfully.'))
-        .catch(err => res.status(400).json('Error: ' + err));
-=======
     .then(image=> {
         fs.unlink("./public/images/"+image.image_name, function(err) {
             if (err) {
@@ -54,7 +46,6 @@ router.route('/:id').delete((req, res) => {
             }
             })})
     .catch(err => res.status(400).json('Error: ' + err));
->>>>>>> a8b241123a80e3ae36b7708a22fa9f44e34d73d4
 });
 
 
