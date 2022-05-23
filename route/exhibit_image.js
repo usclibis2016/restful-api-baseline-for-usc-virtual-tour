@@ -12,7 +12,7 @@ const imagefile=require('../image_controller')
 
 const storageFile = multer.diskStorage({
     destination:(req,file,callback)=>{
-        callback(null,"./public/images")
+        callback(null,"./public/exhibit_img")
     },
     filename:(req,file,callback)=>{
         callback(null,file.originalname);
@@ -38,7 +38,7 @@ router.post('/', upload.single("image_name"), (req, res) => {
 router.route('/:id').delete((req, res) => {
     Exhibit_image.findByIdAndDelete(req.params.id)
     .then(image=> {
-        fs.unlink("./public/images/"+image.image_name, function(err) {
+        fs.unlink("./public/exhibit_img/"+image.image_name, function(err) {
             if (err) {
                 throw err
             } else {
