@@ -1,54 +1,32 @@
 const express = require('express');
+const cors = require("cors");
+
 const app = express();
-const multer  = require('multer')
-const fs = require("fs")
 const router = express.Router();
+app.use(cors()); // migzapp will use cors
+
 const Exhibit_image= require('../models/Exhibit_image');
-
-
-
-
-const imagefile=require('../image_controller')
-
-const storageFile = multer.diskStorage({
-    destination:(req,file,callback)=>{
-        callback(null,"./public/exhibit_img")
-    },
-    filename:(req,file,callback)=>{
-        callback(null,file.originalname);
-    }
-})
- 
-const upload = multer({storage:storageFile});
-
-//Add new Exhibit_image
-router.post('/', upload.single("image_name"), (req, res) => {
-    console.log(req.file);
-    const   image_name= req.file.originalname;
+var bodyParser = require('body-parser');
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true,parameterLimit:1000000}));
+//Add new Exhibit_image thru base64
+router.post('/', (req, res) => {
+    const   image_name= req.body.image_name;
     const   exhibit=req.body.exhibit;
     const   newExhibit_image = new Exhibit_image({image_name,exhibit});
+
     newExhibit_image.save()
-        .then(post => res.json("Exhibit_image added successfully!"))
+        .then(post => res.json("added successfully"))
         .catch(err => res.status(400).json('Error:' + err));
 });
-
 
 
 // Delete Exhibit_image
 router.route('/:id').delete((req, res) => {
     Exhibit_image.findByIdAndDelete(req.params.id)
-    .then(image=> {
-        fs.unlink("./public/exhibit_img/"+image.image_name, function(err) {
-            if (err) {
-                throw err
-            } else {
-               res.json("Deleted successfully")
-            }
-            })})
+    .then(image=> {res.json("Deleted successfully")})
     .catch(err => res.status(400).json('Error: ' + err));
 });
-
-
 
 //veiw all
 router.get('/', (req, res) => {
@@ -57,8 +35,6 @@ router.get('/', (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 
 });
-
-
 
 //veiw specific images by exhibit id
 router.route('/:id').get((req, res) => {
