@@ -23,6 +23,10 @@ const LibrarianShema = mongoose.Schema({
     required:true,
     type:String
   },
+  role:{
+    required:true,
+    type:String
+  },
   addedAT:{
     type:Date,
     default:Date.now()

@@ -4,22 +4,17 @@ const router = express.Router();
 const Librarian= require('../models/Librarian');
 const JWT= require('jsonwebtoken')
 const checkAuth= require("../middleware/checkAuth")  
+const {
+    userAuth,
+    userLogin,
+    checkRole,
+    userRegister,
+    serializeUser
+  } =require("../middleware/checkAuth")
 //Add new Librarian
 router.post('/', async (req, res) => {
+   await userRegister(req.body,"admin",res)
    
-    const   first_name= req.body.first_name;
-    const   middle_initial=req.body.middle_initial;
-    const   last_name=req.body.last_name;
-    const   username= req.body.username;
-    const   password=req.body.password;
-   
-    
-    const newLibrarian = new Librarian({first_name,middle_initial,last_name,username,password});
-    newLibrarian.save()
-    const token=await JWT.sign({newLibrarian},"my_secret_key")
-    res.json({token})
-        // .then(admin => )
-        // .catch(err => res.status(400).json('Error:' + err));
 });
 
 // Delete Librarian
@@ -30,7 +25,7 @@ router.route('/:id').delete((req, res) => {
 });
 
 //veiw all
-router.get('/',checkAuth, (req, res) => {
+router.get('/',userAuth,checkRole(['admin','super admin']),(req, res) => {
     Librarian.find()
         .then(user => res.json(user))
         .catch(err => res.status(400).json('Error: ' + err));
@@ -67,31 +62,6 @@ router.route('/update/:id').post((req, res) => {
 //login route
 router.route('/login').post( async (req, res) => {
     
-  Librarian.find({"username":req.body.username})
-   .then (librarian=>{ 
-     if(librarian.length==0){
-        return res.json({
-            msg:"invalid credential",
-            status:"401"    
-            
-        })
-     }else{
-        if(librarian[0].password!=req.body.password){
-            return res.json({
-                msg:"invalid credential",
-                status:"401"    
-                
-            })
-          
-         }
-            
-     }
-     const token= JWT.sign({librarian},"my_secret_key")
-     res.json({
-         token:token,
-         adminID:librarian[0]._id,
-         status:"200"
-         })
-    })
+    await userLogin(req.body , res);
  });
 module.exports = router;
