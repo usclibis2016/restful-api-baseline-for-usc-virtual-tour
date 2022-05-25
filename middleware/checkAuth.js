@@ -54,8 +54,8 @@ const userLogin = async (userCreds, res) => {
   // First Check if the username is in the database
   const user = await User.findOne({ username });
   if (!user) {
-    return res.status(404).json({
-      message: "Username is not found. Invalid login credentials.",
+    return res.json({
+      message: "Username is not found.",
       success: false
     });
   }
@@ -88,7 +88,7 @@ const userLogin = async (userCreds, res) => {
       success: true
     });
   } else {
-    return res.status(403).json({
+    return res.json({
       message: "Incorrect password.",
       success: false
     });
