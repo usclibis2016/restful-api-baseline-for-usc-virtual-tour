@@ -30,7 +30,7 @@ router.route('/:id').delete((req, res) => {
 });
 
 //veiw all
-router.get('/',checkAuth, (req, res) => {
+router.get('/', (req, res) => {
     Librarian.find()
         .then(user => res.json(user))
         .catch(err => res.status(400).json('Error: ' + err));
@@ -70,11 +70,7 @@ router.route('/login').post( async (req, res) => {
   Librarian.find({"username":req.body.username})
    .then (librarian=>{ 
      if(librarian.length==0){
-        return res.json({
-            msg:"invalid credential",
-            status:"401"    
-            
-        })
+        return res.json(console.log("ok"))
      }else{
         if(librarian[0].password!=req.body.password){
             return res.json({
