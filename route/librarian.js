@@ -18,14 +18,14 @@ router.post('/', async (req, res) => {
 });
 
 // Delete Librarian
-router.route('/:id').delete((req, res) => {
+router.route('/:id').delete(userAuth,checkRole(['super admin']),(req, res) => {
     Librarian.findByIdAndDelete(req.params.id)
         .then(post => res.json('Librarian  deleted Successfully.'))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
 //veiw all
-router.get('/',userAuth,checkRole(['admin','super admin']),(req, res) => {
+router.get('/',userAuth,checkRole(['super admin']),(req, res) => {
     Librarian.find()
         .then(user => res.json(user))
         .catch(err => res.status(400).json('Error: ' + err));
@@ -33,7 +33,7 @@ router.get('/',userAuth,checkRole(['admin','super admin']),(req, res) => {
 });
 
 //veiw specific
-router.route('/:id').get((req, res) => {
+router.route('/:id').get(userAuth,checkRole(['super admin']),(req, res) => {
    Librarian.findById(req.params.id)
         
          .then(librarian =>res.json(librarian))
@@ -44,7 +44,7 @@ router.route('/:id').get((req, res) => {
 
 
 // update librarian
-router.route('/update/:id').post((req, res) => {
+router.route('/update/:id').post(userAuth,checkRole(['super admin']),(req, res) => {
  
     Librarian.findById(req.params.id)
         .then(librarian => {
@@ -62,6 +62,6 @@ router.route('/update/:id').post((req, res) => {
 //login route
 router.route('/login').post( async (req, res) => {
     
-    await userLogin(req.body , res);
+    await userLogin(req.body,res);
  });
 module.exports = router;
