@@ -24,13 +24,13 @@ const upload = multer({storage:storageFile});
 
 //Add new Announcement
 router.post('/',upload.single("image"), (req, res) => {
-   
+    const   announcement_title= req.body.announcement_title;
     const   announcement_text= req.body.announcement_text;
     const   librarian=req.body.librarian;
     const   image=req.file.originalname;
     
     
-    const newAnnouncement = new Announcement({announcement_text,librarian,image});
+    const newAnnouncement = new Announcement({announcement_text,librarian,image,announcement_title});
     newAnnouncement.save()
         .then(post => res.json("Announcement added successfully!"))
         .catch(err => res.status(400).json('Error:' + err));
