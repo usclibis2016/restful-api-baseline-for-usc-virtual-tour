@@ -23,7 +23,7 @@ const upload = multer({storage:storageFile});
 
 
 //Add new Announcement
-router.post('/',upload.single("image"), (req, res) => {
+router.post('/',upload.single("image_name"), (req, res) => {
     const   announcement_title= req.body.announcement_title;
     const   announcement_text= req.body.announcement_text;
     const   librarian=req.body.librarian;
@@ -43,9 +43,11 @@ router.route('/:id').delete((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+
+
 //veiw all
 router.get('/', (req, res) => {
-    Announcement.find()
+    Announcement.find() 
         .then(user => res.json(user))
         .catch(err => res.status(400).json('Error: ' + err));
 
