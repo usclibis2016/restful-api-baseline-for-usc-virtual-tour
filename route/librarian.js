@@ -32,17 +32,6 @@ router.get('/',userAuth,checkRole(['super admin']),(req, res) => {
 
 });
 
-//veiw specific
-router.route('/:id').get((req, res) => {
-    Librarian.findById(req.params.id)
-         
-          .then(user =>res.json(user))
-         .catch(err => res.status(400).json('Error: ' + err));
- });
-
-
-
-
 
 
 //get profile
@@ -50,6 +39,14 @@ router.route('/profile').get(userAuth,checkRole(['admin','super admin']),(req, r
    res.json(serializeUser(req.user))
 });
 
+
+//veiw specific
+router.route('/:id').get(userAuth,checkRole(['admin','super admin']),(req, res) => {
+    Librarian.findById(req.params.id)
+         
+          .then(user =>res.json(user))
+         .catch(err => res.status(400).json('Error: ' + err));
+ });
 
 
 
