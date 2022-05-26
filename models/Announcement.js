@@ -6,7 +6,6 @@ const AnnouncementShema = mongoose.Schema({
   announcement_title:{
     required:true,
     type:String
-     
   },
   announcement_text:{
     required:true,

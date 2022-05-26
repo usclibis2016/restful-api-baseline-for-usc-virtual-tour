@@ -33,7 +33,7 @@ router.get('/',userAuth,checkRole(['super admin']),(req, res) => {
 });
 
 //veiw specific
-router.route('/:id').get(userAuth,checkRole(['super admin']),(req, res) => {
+router.route('/:id').get(userAuth,checkRole(['admin','super admin']),(req, res) => {
    Librarian.findById(req.params.id)
         
          .then(librarian =>res.json(librarian))
