@@ -121,7 +121,9 @@ const serializeUser = user => {
   return {
     username: user.username,
     email: user.email,
-    name: user.name,
+    first_name: user.first_name,
+    middle_initial: user.middle_initial,
+    last_name: user.last_name,
     _id: user._id,
     updatedAt: user.updatedAt,
     createdAt: user.createdAt
