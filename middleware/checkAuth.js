@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const User = require("../models/Librarian");
-const SECRET = "my-secret_key";
+const SECRET = "my_secret_key";
 require('./passport')(passport) // as strategy in ./passport.js needs passport object
 
 /**

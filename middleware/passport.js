@@ -1,7 +1,7 @@
 
 const { Strategy, ExtractJwt } = require("passport-jwt");
 const User = require("../models/Librarian");
-const SECRET  = "my-secret_key";
+const SECRET  = "my_secret_key";
 
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

@@ -32,13 +32,10 @@ router.get('/',userAuth,checkRole(['super admin']),(req, res) => {
 
 });
 
-
-
 //get profile
 router.route('/profile').get(userAuth,checkRole(['admin','super admin']),(req, res) => {
    res.json(serializeUser(req.user))
 });
-
 
 //veiw specific
 router.route('/:id').get(userAuth,checkRole(['admin','super admin']),(req, res) => {
@@ -47,8 +44,6 @@ router.route('/:id').get(userAuth,checkRole(['admin','super admin']),(req, res) 
           .then(user =>res.json(user))
          .catch(err => res.status(400).json('Error: ' + err));
  });
-
-
 
 // update librarian
 router.route('/update/:id').post(userAuth,checkRole(['super admin']),(req, res) => {
@@ -59,7 +54,6 @@ router.route('/update/:id').post(userAuth,checkRole(['super admin']),(req, res) 
               librarian.middle_initial = req.body.middle_initial;
               librarian.last_name = req.body.last_name;
               librarian.username = req.body.username;
-              librarian.password = req.body.password;
             librarian.save()
                 .then(user => res.json("Record was updated."))
                 .catch(err => res.status(400).json('Error: ' + err));
