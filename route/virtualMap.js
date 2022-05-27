@@ -67,17 +67,11 @@ router.post('/update/:id',upload.single("image_name"),(req, res) => {
    
     virtualMap.findById(req.params.id) 
     .then(vmapImage=> { 
-     if(req.file.vmapImage==undefined){ 
-        vmapImage.available=req.body.available;
-        vmapImage.save()
-             .then(post => res.json("virtual map  was updated."))
-             .catch(err => res.status(400).json('Error: ' + err));}else{}
         fs.unlink("./public/images/"+vmapImage.image_name, function(err) {
             if (err) {
                 throw err
             } else {
                vmapImage.image_name=req.file.originalname;
-               vmapImage.available=req.body.available;
                vmapImage.save()
                     .then(post => res.json("Virtual map  was updated."))
                     .catch(err => res.status(400).json('Error: ' + err));

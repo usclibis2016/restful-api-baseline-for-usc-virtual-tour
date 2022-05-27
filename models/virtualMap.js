@@ -5,17 +5,11 @@ const virtualMapSchema = mongoose.Schema({
         required:false,
         type:String  
       },
-      available:{
-        required:false,
-        type:Boolean
-       },
     Library:{
         required:false,
         type:mongoose.ObjectId,
         ref:"Library"
-      },
-
-
+      }
 })
 
 module.exports = mongoose.model('VirtualMap', virtualMapSchema);
