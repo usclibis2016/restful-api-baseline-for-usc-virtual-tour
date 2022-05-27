@@ -56,7 +56,7 @@ router.get('/', (req, res) => {
 //veiw specific
 router.route('/:id').get((req, res) => {
    Announcement.findById(req.params.id)
-        
+    
          .then(exhibit =>res.json(exhibit))
         .catch(err => res.status(400).json('Error: ' + err));
 });
