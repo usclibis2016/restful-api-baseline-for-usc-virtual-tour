@@ -9,7 +9,8 @@ const ExhibitShema = mongoose.Schema({
    },
    available:{
   
-    type:Boolean
+    type:Boolean,
+    default:true
    },
    exhibit_description:{
   

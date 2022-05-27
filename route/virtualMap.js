@@ -8,7 +8,7 @@ const virtualMap = require('../models/VirtualMap');
 
 const storageFile = multer.diskStorage({
     destination:(req,file,callback)=>{
-        callback(null,"./public/images")
+        callback(null,"./public/virtual_map")
     },
     filename:(req,file,callback)=>{
         callback(null,file.originalname);
@@ -67,7 +67,7 @@ router.post('/update/:id',upload.single("image_name"),(req, res) => {
    
     virtualMap.findById(req.params.id) 
     .then(vmapImage=> { 
-        fs.unlink("./public/images/"+vmapImage.image_name, function(err) {
+        fs.unlink("./public/virtual_map/"+vmapImage.image_name, function(err) {
             if (err) {
                 throw err
             } else {
