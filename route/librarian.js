@@ -16,7 +16,21 @@ router.post('/', async (req, res) => {
    await userRegister(req.body,"admin",res)
    
 });
-
+// update librarian
+router.route('/update/:id').post((req, res) => {
+ 
+    Librarian.findById(req.params.id)
+        .then(librarian => {
+              librarian.first_name = req.body.first_name;
+              librarian.middle_initial = req.body.middle_initial;
+              librarian.last_name = req.body.last_name;
+              librarian.username = req.body.username;
+            librarian.save()
+                .then(user => res.json("Record was updated."))
+                .catch(err => res.status(400).json('Error: ' + err));
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+});
 // Delete Librarian
 router.route('/:id').delete(userAuth,checkRole(['super admin']),(req, res) => {
     Librarian.findByIdAndDelete(req.params.id)
@@ -33,10 +47,9 @@ router.get('/',userAuth,checkRole(['super admin']),(req, res) => {
 });
 
 
-
 //get profile
 router.route('/profile').get(userAuth,checkRole(['admin','super admin']),(req, res) => {
-   res.json(serializeUser(req.user))
+   res.json(req.user)
 });
 
 
@@ -50,22 +63,6 @@ router.route('/:id').get(userAuth,checkRole(['admin','super admin']),(req, res) 
 
 
 
-// update librarian
-router.route('/update/:id').post(userAuth,checkRole(['super admin']),(req, res) => {
- 
-    Librarian.findById(req.params.id)
-        .then(librarian => {
-              librarian.first_name = req.body.first_name;
-              librarian.middle_initial = req.body.middle_initial;
-              librarian.last_name = req.body.last_name;
-              librarian.username = req.body.username;
-              librarian.password = req.body.password;
-            librarian.save()
-                .then(user => res.json("Record was updated."))
-                .catch(err => res.status(400).json('Error: ' + err));
-        })
-        .catch(err => res.status(400).json('Error: ' + err));
-});
 //login route
 router.route('/login').post( async (req, res) => {
     

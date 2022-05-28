@@ -43,7 +43,7 @@ router.route('/:id').delete((req, res) => {
 
 //veiw all
 router.get('/', (req, res) => {
-    Announcement.find() 
+    Announcement.find().populate('librarian') 
         .then(user => res.json(user))
         .catch(err => res.status(400).json('Error: ' + err));
 
