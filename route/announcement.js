@@ -15,8 +15,12 @@ const storageFile = multer.diskStorage({
         callback(null,file.originalname);
     }
 })
-
+ 
 const upload = multer({storage:storageFile});
+
+
+
+
 
 //Add new Announcement
 router.post('/',upload.single("image_name"), (req, res) => {
@@ -56,5 +60,5 @@ router.route('/:id').get((req, res) => {
          .then(exhibit =>res.json(exhibit))
         .catch(err => res.status(400).json('Error: ' + err));
 });
-module.exports = router;
 
+module.exports = router;
