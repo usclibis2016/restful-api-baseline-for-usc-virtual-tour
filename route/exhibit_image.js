@@ -62,7 +62,7 @@ router.get('/', (req, res) => {
 
 //veiw specific images by exhibit id
 router.route('/:id').get((req, res) => {
-   Exhibit_image.find({"exhibit":req.params.id})
+   Exhibit_image.find({"exhibit":req.params.id}).populate('exhibit')
         
          .then(exhibit =>res.json(exhibit))
         .catch(err => res.status(400).json('Error: ' + err));

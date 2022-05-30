@@ -15,9 +15,9 @@ router.get('/', (req, res) => {
 
 });
 
-//veiw specific
+//veiw by library
 router.route('/:id').get((req, res) => {
-   Exhibits.findById(req.params.id)
+   Exhibits.find({library:req.params.id})
         
          .then(exhibit =>res.json(exhibit))
         .catch(err => res.status(400).json('Error: ' + err));

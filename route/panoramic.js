@@ -55,9 +55,9 @@ router.get('/', (req, res) => {
 });
 
 
-//veiw specific images by exhibit id
+//veiw specific images by library id
 router.route('/:id').get((req, res) => {
-   Panoramic.findById(req.params.id)
+   Panoramic.find({"Library":req.params.id})
          .then(panoramic =>res.json(panoramic))
         .catch(err => res.status(400).json('Error: ' + err));
 });
