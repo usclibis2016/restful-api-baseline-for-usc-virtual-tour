@@ -40,7 +40,7 @@ router.route('/:id').delete(userAuth,checkRole(['super admin']),(req, res) => {
 
 //veiw all
 router.get('/',userAuth,checkRole(['super admin']),(req, res) => {
-    Librarian.find()
+    Librarian.find({"role":"admin"})
         .then(user => res.json(user))
         .catch(err => res.status(400).json('Error: ' + err));
 

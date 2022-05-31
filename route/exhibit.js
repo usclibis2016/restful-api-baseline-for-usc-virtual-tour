@@ -14,14 +14,24 @@ router.get('/', (req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 
 });
+// view specific
+router.route('/specific/:id').get((req, res) => {
+    Exhibits.findById(req.params.id)
+          .then(exhibit =>res.json(exhibit))
+         .catch(err => res.status(400).json('Error: ' + err));
+ });
 
-//veiw by library
+
+// veiw by library
 router.route('/:id').get((req, res) => {
    Exhibits.find({library:req.params.id})
         
          .then(exhibit =>res.json(exhibit))
         .catch(err => res.status(400).json('Error: ' + err));
 });
+
+
+
 
 //Add 
 router.post('/', (req, res) => {
@@ -34,7 +44,7 @@ router.post('/', (req, res) => {
         .then(post => res.json("Exhibit added successfully!"))
         .catch(err => res.status(400).json('Error:' + err));
 });
-
+    
 
 // delete exhibit
 router.route('/:id').delete((req, res) => {
