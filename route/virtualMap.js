@@ -19,9 +19,9 @@ const upload = multer({storage:storageFile});
 
 //Add new virtual map images
 router.post('/', upload.single("image_name"), (req, res) => {
-    console.log(req.file);
-    const   image_name= req.file.originalname
-    const    location=req.body.location
+    // console.log(req.file);
+    const image_name= req.file.originalname
+    const location=req.body.location
     const NewVirtualMap = new virtualMap({image_name,location});
     NewVirtualMap.save()
         .then(post => res.json("virtualmap added successfully!"))
@@ -29,20 +29,26 @@ router.post('/', upload.single("image_name"), (req, res) => {
 });
 
 // Delete virtual map images
-router.route('/:id').delete((req, res) => {
+// router.route('/:id').delete((req, res) => {
 
-    virtualMap.findByIdAndDelete(req.params.id)
-            .then(vmapImage=> {
-                fs.unlink("./public/images/"+vmapImage.image_name, function(err) {
-                    if (err) {
-                        throw err
-                    } else {
-                       res.json("Deleted successfully")
+//     virtualMap.findByIdAndDelete(req.params.id)
+//             .then(vmapImage=> {
+//                 fs.unlink("./public/virtualmap/"+vmapImage.image_name, function(err) {
+//                     if (err) {
+//                         throw err
+//                     } else {
+//                        res.json("Deleted successfully")
                     
-                    }
-                    })})
-            .catch(err => res.status(400).json('Error: ' + err));
-})
+//                     }
+//                     })})
+//             .catch(err => res.status(400).json('Error: ' + err));
+// })
+
+router.route('/:id').delete((req, res) => {
+    virtualMap.findByIdAndDelete(req.params.id)
+        .then(post => res.json('Virtual map deleted Successfully.'))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
 
 //view all
 router.get('/', (req, res) => {
@@ -56,7 +62,7 @@ router.get('/', (req, res) => {
 //veiw specific images by exhibit id
 router.route('/:id').get((req, res) => {
    virtualMap.findById(req.params.id)
-         .then(virtualMap =>res.json(virtualMap))
+        .then(virtualMap =>res.json(virtualMap))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
