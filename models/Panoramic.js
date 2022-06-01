@@ -8,7 +8,7 @@ const PanoramicShema = mongoose.Schema({
         type:String  
       },
       available:{
-        required:false,
+        required:true,
         type:Boolean
        },
     Library:{

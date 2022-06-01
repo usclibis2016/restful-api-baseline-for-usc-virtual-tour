@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 });
 // view specific
 router.route('/specific/:id').get((req, res) => {
-    Exhibits.findById(req.params.id)
+    Exhibits.findById(req.params.id).populate('library')
           .then(exhibit =>res.json(exhibit))
          .catch(err => res.status(400).json('Error: ' + err));
  });

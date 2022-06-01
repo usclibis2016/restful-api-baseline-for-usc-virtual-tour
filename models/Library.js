@@ -11,24 +11,10 @@ const LibraryShema = mongoose.Schema({
     required:true,
     type:String
   },
-  theme:{
-    required:true,
-    type:String
-  },
    library_description:{
     required:true,
     type:String
   },
-  panoramic_view:[{
-    required:true,
-    type:mongoose.ObjectId,
-    ref:"PanoramicView"
-  }],
-  virtual_map:[{
-    required:true,
-    type:mongoose.ObjectId,
-    ref:"VirtualMap"
-  }],
   librarian:{
     required:false,
     type:mongoose.ObjectId,
