@@ -66,7 +66,7 @@ router.post('/update/:id',upload.single("image_name"),(req, res) => {
    
     Panoramic.findById(req.params.id)   
     .then(panoImage=> { 
-        if(req.body.available===false){
+        if(req.body.available==="false"){
             panoImage.available=req.body.available;
             panoImage.Library=req.body.library
             panoImage.save()

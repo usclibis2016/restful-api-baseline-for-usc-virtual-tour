@@ -8,7 +8,7 @@ const LibraryShema = mongoose.Schema({
     type:String
   },
   library_location:{
-    required:true,
+    required:false,
     type:String
   },
    library_description:{

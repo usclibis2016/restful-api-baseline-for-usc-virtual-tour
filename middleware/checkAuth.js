@@ -13,7 +13,7 @@ const userRegister = async (userDets, role, res) => {
     // Validate the username
     let usernameNotTaken = await validateUsername(userDets.username);
     if (!usernameNotTaken) {
-      return res.status(400).json({
+      return res.json({
         message: `Username is already taken.`,
         success: false
       });
