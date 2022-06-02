@@ -12,7 +12,7 @@ const PanoramicShema = mongoose.Schema({
         type:Boolean
        },
     Library:{
-        required:false,
+        required:true,
         type:mongoose.ObjectId,
         ref:"Library"
       },

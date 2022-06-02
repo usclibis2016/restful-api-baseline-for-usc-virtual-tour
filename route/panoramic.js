@@ -20,9 +20,8 @@ const upload = multer({storage:storageFile});
 //Add new Panoramic images
 router.post('/', upload.single("image_name"), (req, res) => {
     console.log(req.file);
-
     const   image_name= req.file.originalname;
-    const   Library=req.body.Library;
+    const   Library=req.body.library;
     const   available=req.body.available
     const NewPanoramic = new Panoramic({image_name,Library,available});
     NewPanoramic.save()
@@ -48,7 +47,7 @@ router.route('/:id').delete((req, res) => {
 
 //veiw all
 router.get('/', (req, res) => {
-    Panoramic.find()
+    Panoramic.find().populate("Library")
         .then(result => res.json(result))
         .catch(err => res.status(400).json('Error: ' + err));
 
@@ -57,7 +56,7 @@ router.get('/', (req, res) => {
 
 //veiw specific images by library id
 router.route('/:id').get((req, res) => {
-   Panoramic.find({"Library":req.params.id})
+   Panoramic.find({"Library":req.params.id}).populate("Library")
          .then(panoramic =>res.json(panoramic))
         .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -67,9 +66,9 @@ router.post('/update/:id',upload.single("image_name"),(req, res) => {
    
     Panoramic.findById(req.params.id)   
     .then(panoImage=> { 
-        if(req.body.available=="false"){
+        if(req.body.available===false){
             panoImage.available=req.body.available;
-            panoImage.Library=req.body.Library
+            panoImage.Library=req.body.library
             panoImage.save()
                  .then(post => res.json("Panoramic  was updated."))
                  .catch(err => res.status(400).json('Error: ' + err));
@@ -81,17 +80,16 @@ router.post('/update/:id',upload.single("image_name"),(req, res) => {
                 } else {
                    panoImage.image_name=req.file.originalname;
                    panoImage.available=req.body.available;
-                   panoImage.Library=req.body.Library
+                   panoImage.Library=req.body.library
                    panoImage.save()
                         .then(post => res.json("Panoramic  was updated."))
                         .catch(err => res.status(400).json('Error: ' + err));
                 } 
             })
         }
-        
         })
     .catch(err => res.status(400).json('Error: ' + err));
         
 });
 
-module.exports = router;    
+module.exports = router;        

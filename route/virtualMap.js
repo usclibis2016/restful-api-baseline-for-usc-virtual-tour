@@ -21,7 +21,7 @@ const upload = multer({storage:storageFile});
 router.post('/', upload.single("image_name"), (req, res) => {
     console.log(req.file);
     const   image_name= req.file.originalname
-    const    location=req.body.location
+    const    location=req.body.location 
     const NewVirtualMap = new virtualMap({image_name,location});
     NewVirtualMap.save()
         .then(post => res.json("virtualmap added successfully!"))
